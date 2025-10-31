@@ -15,4 +15,14 @@ def teste_parenteses_balenceados():
     assert validador_expressao("(") == False
     assert validador_expressao(")") == False
 
-def teste_doiscolocarnomeaqui():
+def teste_nao_permite_operadores_seguidos():
+    # Casos inválidos (deve retornar False)
+    assert validador_expressao("1++2") == False
+    assert validador_expressao("1--2") == False
+    assert validador_expressao("1+-2") == False
+    assert validador_expressao("5*/2") == False
+    assert validador_expressao("(1**2)") == False # Dentro de parênteses
+
+    # Casos de regressão (válidos que não devem quebrar)
+    assert validador_expressao("1+2") == True
+    assert validador_expressao("(1-2)*3") == True
