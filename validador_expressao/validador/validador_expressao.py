@@ -1,10 +1,12 @@
-OPERADORES = "+-*/" # Constante movida para cá
+OPERADORES = "+-*/" 
+
+def _eh_operador(char):
+    return char in OPERADORES
+
+def _eh_numero(char):
+    return char.isdigit()
 
 def validador_expressao(expressao):
-    """
-    1. Verifica se os parênteses na expressão estão balanceados.
-    Retorna True se está válido, False caso contrário.
-    """
     contador = 0
     ultimo_char_valido = ""
     primeiro_char_valido = ""
@@ -13,33 +15,33 @@ def validador_expressao(expressao):
         if char == ' ':
             continue
 
-        # NOVO: Captura o primeiro caractere válido (não-espaço)
         if primeiro_char_valido == "":
             primeiro_char_valido = char
 
-        if char in OPERADORES and ultimo_char_valido in OPERADORES:
-            return False
+        
+        if _eh_numero(ultimo_char_valido):
+            if char == '(':
+                return False
 
+        if _eh_operador(ultimo_char_valido):
+            if not _eh_numero(char) and char != '(':
+                return False
+                
         if char == "(":
             contador += 1
         elif char == ")":
             contador -= 1
-            # Fecha mais do que abriu
             if contador < 0:
-                return False
+                return False 
             
         ultimo_char_valido = char
     
-    # Caso de string vazia ou só com espaços
     if primeiro_char_valido == "":
         return False 
 
-    # Se todos os parênteses foram fechados corretamente 
-    # o contator deve estar zerado
-
-    # Retorna True APENAS SE todas as condições finais passarem
+    
     return (
-        contador == 0 and  # Regra 1
-        primeiro_char_valido not in OPERADORES and # Regra 3
-        ultimo_char_valido not in OPERADORES   # Regra 3
+        contador == 0 and 
+        not _eh_operador(primeiro_char_valido) and 
+        not _eh_operador(ultimo_char_valido)  
     )

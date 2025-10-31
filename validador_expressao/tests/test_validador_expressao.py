@@ -6,7 +6,6 @@ def teste_parenteses_balenceados():
     # valida se os parênteses estão corretamente balanceados.
     # válidos
     assert validador_expressao("(1+2)") == True
-    assert validador_expressao("(1+2(2*3))") == True
     # inválidos
     assert validador_expressao ("(1+2") == False
     assert validador_expressao (")1)") == False
@@ -41,3 +40,12 @@ def teste_nao_comeca_ou_termina_com_operador():
     assert validador_expressao("(1+2)") == True
     assert validador_expressao("1") == True
     assert validador_expressao("1 + 2") == True
+
+def teste_numero_nao_pode_ser_seguido_por_abre_parenteses():
+    assert validador_expressao("5(1+1)") == False
+    assert validador_expressao("5 (1+1)") == False
+    assert validador_expressao("(1+2(2*3))") == False
+
+def teste_operador_nao_pode_ser_seguido_por_fecha_parenteses():
+    assert validador_expressao("(1 + )") == False
+    assert validador_expressao("(1 + (2 * ))") == False
