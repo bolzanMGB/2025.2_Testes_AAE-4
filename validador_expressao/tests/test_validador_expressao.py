@@ -26,3 +26,18 @@ def teste_nao_permite_operadores_seguidos():
     # Casos de regressão (válidos que não devem quebrar)
     assert validador_expressao("1+2") == True
     assert validador_expressao("(1-2)*3") == True
+
+    # CICLO 03 - Regra 3
+def teste_nao_comeca_ou_termina_com_operador():
+    # Casos inválidos (deve retornar False)
+    assert validador_expressao("*1+2") == False       # Começa com operador
+    assert validador_expressao("1+2-") == False       # Termina com operador
+
+    # Testando com espaços (Regra 6)
+    assert validador_expressao(" /5-1") == False      # Começa com operador
+    assert validador_expressao("(1+2)* ") == False    # Termina com operador
+
+    # Testes de regressão (válidos que não devem quebrar)
+    assert validador_expressao("(1+2)") == True
+    assert validador_expressao("1") == True
+    assert validador_expressao("1 + 2") == True
